@@ -1,18 +1,11 @@
-# I-YOLOR
-
-# Aicup_drone-2022 無人機飛行載具之智慧計數競賽
+# 使用改進的 YOLOR 算法進行自動駕駛道路目標檢測
+# IYOLOR - Road Object Detection for Autonomous Driving Using Improved YOLOR Algorithm
 
 ## 指導教授: 劉宗榮  
 
-## 隊名: TEAM_2060
-
-## 隊長 : [黃裕芳](https://github.com/Andrewhsin)  組員: 蘇郁宸, 林峻安, [陳柏瑋](https://github.com/bobo0303), 賴亭旭  
+## [黃裕芳](https://github.com/Andrewhsin) 
 
 Implementation of paper - [YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors](https://arxiv.org/abs/2207.02696)
-
-Competitions - [Aicup_drone-2022](https://tbrain.trendmicro.com.tw/Competitions/Details/25)
-
-<img src="./figure/img10011.png" height="480">
 
 ```
 ├── README.md    
