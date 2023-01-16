@@ -1,53 +1,8 @@
-# 使用改進的 YOLOR 算法進行自動駕駛道路目標檢測
-# IYOLOR - Road Object Detection for Autonomous Driving Using Improved YOLOR Algorithm
-
-## 指導教授: 劉宗榮  
-
-## [黃裕芳](https://github.com/Andrewhsin) 
+# Official YOLOv7
 
 Implementation of paper - [YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors](https://arxiv.org/abs/2207.02696)
 
-```
-├── README.md    
-
-主要訓練程式碼
-├── runs
-│   ├── train               存放訓練權重資料夾
-│   ├── detect              存放 public & private 輸出資料夾 
-│   └── save                存放 public & private .csv 輸出資料夾 
-├── make_txt.py             把主辦單位給的csv轉成相關格式
-├── 目標數據集
-│   ├── train.txt           轉檔後的訓練標籤檔
-│   ├── val.txt             轉檔後的驗證標籤檔 
-│   ├── train               存放 train 的 image & labels 資料夾
-│   └── save                存放 val 的 image & labels 資料夾
-├── train.py                執行訓練及其他參數調整
-├── runs
-│   ├── train               存放訓練權重資料夾
-│   ├── detect              存放 public & private 輸出資料夾 
-│   └── save                存放 public & private .csv 輸出資料夾 
-├── data_arg
-│   ├── ENSEMBLE            不同模型 & csv 結合
-│   ├── AUGMENTATION_       資料擴增、翻轉、旋轉       
-│   └── PSUEDO_LABEL        將輸出結果 PSUEDO_LABEL
-│
-├── log                     訓練loss可視化(tensorboard)
-├── wandb                   訓練loss可視化(wandb)
-├── yolov7.pt               YOLOv7 pretrained model
-├── yolov7_w6.pt            YOLOv7_w6 pretrained model   
-
-主要測試程式碼
-
-├── detect.py               輸出 public & private 資料集
-├── csv_output.py             將 public & private 資料集結果轉為.csv  
-
-```
-
-
-
-
-
-
+<img src="./figure/performance.png" height="480">
 
 ## Web Demo
 
@@ -55,6 +10,17 @@ Implementation of paper - [YOLOv7: Trainable bag-of-freebies sets new state-of-t
 
 ## Performance 
 
+MS COCO
+
+| Model | Test Size | AP<sup>test</sup> | AP<sub>50</sub><sup>test</sup> | AP<sub>75</sub><sup>test</sup> | batch 1 fps | batch 32 average time |
+| :-- | :-: | :-: | :-: | :-: | :-: | :-: |
+| [**YOLOv7**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt) | 640 | **51.4%** | **69.7%** | **55.9%** | 161 *fps* | 2.8 *ms* |
+| [**YOLOv7-X**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt) | 640 | **53.1%** | **71.2%** | **57.8%** | 114 *fps* | 4.3 *ms* |
+|  |  |  |  |  |  |  |
+| [**YOLOv7-W6**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-w6.pt) | 1280 | **54.9%** | **72.6%** | **60.1%** | 84 *fps* | 7.6 *ms* |
+| [**YOLOv7-E6**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-e6.pt) | 1280 | **56.0%** | **73.5%** | **61.2%** | 56 *fps* | 12.3 *ms* |
+| [**YOLOv7-D6**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-d6.pt) | 1280 | **56.6%** | **74.0%** | **61.8%** | 44 *fps* | 15.0 *ms* |
+| [**YOLOv7-E6E**](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-e6e.pt) | 1280 | **56.8%** | **74.4%** | **62.1%** | 36 *fps* | 18.7 *ms* |
 
 ## Installation
 
@@ -78,18 +44,34 @@ cd /yolov7
 
 </details>
 
+## Testing
+
+[`yolov7.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7.pt) [`yolov7x.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7x.pt) [`yolov7-w6.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-w6.pt) [`yolov7-e6.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-e6.pt) [`yolov7-d6.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-d6.pt) [`yolov7-e6e.pt`](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/yolov7-e6e.pt)
+
+```
+python test.py --data data/coco.yaml --img 640 --batch 32 --conf 0.001 --iou 0.65 --device 0 --weights yolov7.pt --name yolov7_640_val
+```
+
+You will get the results:
+
+```
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.51206
+ Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] = 0.69730
+ Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] = 0.55521
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.35247
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.55937
+ Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.66693
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=  1 ] = 0.38453
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets= 10 ] = 0.63765
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] = 0.68772
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] = 0.53766
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.73549
+ Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.83868
+```
+
+To measure accuracy, download [COCO-annotations for Pycocotools](http://images.cocodataset.org/annotations/annotations_trainval2017.zip).
+
 ## Training
-
-1. 準備Ground truth label (`train.txt`/`val.txt`)  
-   並將訓練圖片放入training資料夾，label格式如下
-    ```
-    E:/Aicup_drone/image_path/train/images/img10001.jpg
-    E:/Aicup_drone/image_path/train/images/img10002.jpg
-    E:/Aicup_drone/image_path/train/images/img10003.jpg
-    E:/Aicup_drone/image_path/train/images/img10004.jpg
-    ...
-    ```
-
 
 Single GPU training
 
@@ -107,30 +89,17 @@ python -m torch.distributed.launch --nproc_per_node 4 --master_port 9527 train.p
 python -m torch.distributed.launch --nproc_per_node 4 --master_port 9527 train.py --workers 8 --device 0,1,2,3 --sync-bn --batch-size 128 --data data/coco.yaml --img 640 640 --cfg cfg/training/yolov7x.yaml --weights '' --name yolov7x --hyp data/hyp.scratch.p5.yaml
 ```
 
+The training code and instruction of p6 models will release soon.
+
+Download MS COCO dataset images ([train](http://images.cocodataset.org/zips/train2017.zip), [val](http://images.cocodataset.org/zips/val2017.zip), [test](http://images.cocodataset.org/zips/test2017.zip)) and [labels](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/coco2017labels-segments.zip). If you have previously used a different version of YOLO, we strongly recommend that you delete `train2017.cache` and `val2017.cache` files, and redownload [labels](https://github.com/WongKinYiu/yolov7/releases/download/v0.1/coco2017labels-segments.zip) 
+
+## Re-parameterization
+
+The re-parameterization code and instruction will release soon.
+
 ## Inference
 
-## 1.1 相關測試參數設定
-1. [AI CUP 競賽報告](https://drive.google.com/file/d/1puLpWeq7S_aKfyerbI9787HfJ-Fl19_l/view?usp=sharing)  
-2. [AI CUP 實驗記錄](https://drive.google.com/file/d/1tNn-kyzaWkC-EPw4iEtFYSf3xShvJVQq/view?usp=sharing)  
-3. [Public data](https://drive.google.com/drive/folders/1lx4rOFNm1ayZOFxhmhru6AoiEg05JO4O?usp=sharing)
-4. [Private data](https://drive.google.com/drive/folders/1n52IcT7IGtNQ5OG2wetj__WAki9ajiRO?usp=sharing)
-5. 測試時不需要更改相關路徑，只須確定所有相對路徑內是否有圖片即可  
-6. 測試時所有更改參數的地方都在`名稱.yaml`進行更改  
-7. 預設測試資料路徑: `./inference/images/`
-8. 預設測試結果路徑: `./runs/detect/`
-
-`python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source inference/`
-
-<img src="./figure/img1001.png" height="480">
-
-
-## 2.2 測試分數
-- 我們每次上傳分數都會留下當次測試的參數細節、偵測結果圖與測試分數  
-  若有需要可以聯絡我們 再把所有完整檔案分批傳送
-  
-  <img src="./figure/203.png" height="480">
-
-
+`python detect.py --weights yolov7.pt --conf 0.25 --img-size 640 --source inference/images/horses.jpg`
 
 ## Citation
 
@@ -143,13 +112,24 @@ python -m torch.distributed.launch --nproc_per_node 4 --master_port 9527 train.p
 }
 ```
 
+## Teaser
+
+Yolov7-mask & YOLOv7-pose
+
+<div align="center">
+    <a href="./">
+        <img src="./figure/mask.png" width="56%"/>
+    </a>
+    <a href="./">
+        <img src="./figure/pose.png" width="42%"/>
+    </a>
+</div>
 
 ## Acknowledgements
 
 <details><summary> <b>Expand</b> </summary>
 
 * [https://github.com/AlexeyAB/darknet](https://github.com/AlexeyAB/darknet)
-* [https://github.com/WongKinYiu/yolov7](https://github.com/WongKinYiu/yolov7)
 * [https://github.com/WongKinYiu/yolor](https://github.com/WongKinYiu/yolor)
 * [https://github.com/WongKinYiu/PyTorch_YOLOv4](https://github.com/WongKinYiu/PyTorch_YOLOv4)
 * [https://github.com/WongKinYiu/ScaledYOLOv4](https://github.com/WongKinYiu/ScaledYOLOv4)
