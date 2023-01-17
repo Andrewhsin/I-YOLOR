@@ -1,0 +1,10 @@
+# train and val datasets (image directory or *.txt file with image paths)
+train: E:/yolov7-main/Udacity_small/train/  # 118k images
+val: E:/yolov7-main/Udacity_small/val/ # 5k images
+test: E:/yolor-main/TT100K/data/test/  # 20k images for submission to https://competitions.codalab.org/competitions/20794
+
+# number of classes
+nc: 11
+
+# class names
+names: ['biker', 'car', 'pedestrian', 'trafficLight', 'trafficLight-Green', 'trafficLight-GreenLeft', 'trafficLight-Red', 'trafficLight-RedLeft', 'trafficLight-Yellow', 'trafficLight-YellowLeft', 'truck']

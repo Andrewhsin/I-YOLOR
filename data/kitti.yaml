@@ -1,0 +1,11 @@
+# train and val datasets (image directory or *.txt file with image paths)
+train: E:/yolov7-main/kitti/train/  # 118k images
+val: E:/yolov7-main/kitti/val/ # 5k images
+test: E:/yolor-main/bdd100k/test/ # 20k images for submission to https://competitions.codalab.org/competitions/20794
+
+# number of classes
+nc: 9
+
+# class names
+names: ['car', 'Van', 'Truck', 'Pedestrian', 'Person (sit- ting)', 'Cyclist', 'Tram', 'Misc', 'dont care']
+
